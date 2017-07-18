@@ -22,7 +22,7 @@ optional arguments:
                         Output directory
   -ua USERAGENT, --useragent USERAGENT
                         User-Agent to use for crawling
-  --debug               Output directory
+  --debug               Enable debug mode on scrapy/splash
 
 ```
 

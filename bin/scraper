@@ -17,7 +17,7 @@ if __name__ == '__main__':
     parser.add_argument("-d", "--depth", default=1, help="Depth of the crawl.")
     parser.add_argument("-o", "--output", help="Output directory")
     parser.add_argument("-ua", "--useragent", help="User-Agent to use for crawling")
-    parser.add_argument("--debug", action='store_true', help="Output directory")
+    parser.add_argument("--debug", action='store_true', help="Enable debug mode on scrapy/splash")
 
     args = parser.parse_args()
     params = {}
