@@ -1,0 +1,58 @@
+#!/usr/bin/env python
+# -*- coding: utf-8 -*-
+
+import argparse
+import base64
+import json
+import os
+import sys
+from datetime import datetime
+
+from scrapysplashwrapper import crawl
+
+if __name__ == '__main__':
+    parser = argparse.ArgumentParser(description='Crawl a URL.')
+    parser.add_argument("-s", "--splash", default='http://127.0.0.1:8050', help="Splash URL to use for crawling.")
+    parser.add_argument("-u", "--url", required=True, help="URL to crawl")
+    parser.add_argument("-d", "--depth", default=1, help="Depth of the crawl.")
+    parser.add_argument("-o", "--output", help="Output directory")
+    parser.add_argument("-ua", "--useragent", help="User-Agent to use for crawling")
+    parser.add_argument("--debug", action='store_true', help="Output directory")
+
+    args = parser.parse_args()
+    params = {}
+    if args.useragent is not None:
+        params['ua'] = args.useragent
+    if args.debug:
+        params['log_enabled'] = True
+        params['log_level'] = 'INFO'
+
+    if args.output:
+        dirpath = os.path.join('./', args.output)
+    else:
+        dirpath = os.path.join('./', datetime.now().isoformat())
+
+    if os.path.exists(dirpath):
+        sys.exit('{} already exists.'.format(dirpath))
+
+    os.makedirs(dirpath)
+
+    items = crawl(args.splash, args.url, args.depth, **params)
+
+    if not items:
+        sys.exit('Unable to crawl. Probably a network problem (try --debug).')
+    width = len(str(len(items)))
+    i = 1
+    for item in items:
+        with open(os.path.join(dirpath, '{0:0{width}}.json'.format(i, width=width)), 'w') as f:
+            json.dump(item, f)
+        png = item['png']
+        with open(os.path.join(dirpath, '{0:0{width}}.png'.format(i, width=width)), 'wb') as f:
+            f.write(base64.b64decode(png))
+        harfile = item['har']
+        with open(os.path.join(dirpath, '{0:0{width}}.har'.format(i, width=width)), 'w') as f:
+            json.dump(harfile, f)
+        htmlfile = item['html']
+        with open(os.path.join(dirpath, '{0:0{width}}.html'.format(i, width=width)), 'w') as f:
+            json.dump(htmlfile, f)
+        i += 1
