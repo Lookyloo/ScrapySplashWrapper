@@ -25,7 +25,7 @@ class ScrapySplashWrapperCrawler():
 
         def start_requests(self):
             yield SplashRequest(self.start_url, self.parse, endpoint='render.json',
-                                args={'har': 1, 'png': 1, 'html': 1})
+                                args={'har': 1, 'png': 1, 'html': 1, 'response_body': 1})
 
         def parse(self, response):
             le = LinkExtractor(allow_domains=self.allowed_domains)
