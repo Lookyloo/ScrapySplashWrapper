@@ -26,14 +26,16 @@ class ScrapySplashWrapperCrawler():
         def start_requests(self):
             yield SplashRequest(self.start_url, self.parse, endpoint='render.json',
                                 args={'har': 1, 'html': 1, 'response_body': 1,
-                                      'png': 1, 'wait': 10, 'render_all': 1})
+                                      'png': 1, 'wait': 10, 'render_all': 1,
+                                      'iframes': 1})
 
         def parse(self, response):
             le = LinkExtractor(allow_domains=self.allowed_domains)
             for link in le.extract_links(response):
                 yield SplashRequest(link.url, self.parse, endpoint='render.json',
                                     args={'har': 1, 'html': 1, 'response_body': 1,
-                                          'png': 1, 'wait': 10, 'render_all': 1})
+                                          'png': 1, 'wait': 10, 'render_all': 1,
+                                          'iframes': 1})
             yield response.data
 
     def __init__(self, splash_url, useragent, depth=1, log_enabled=False, log_level='WARNING'):
