@@ -6,7 +6,7 @@ import multiprocessing
 
 
 def crawl(splash_url, url, depth=1,
-          user_agent='Mozilla/5.0 (Windows NT 6.3; WOW64; rv:53.0) Gecko/20100101 Firefox/53.0',
+          user_agent='Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/63.0.3239.132 Safari/537.36',
           log_enabled=False, log_level='WARNING'):
     def _crawl(queue, splash_url, ua, url, depth, log_enabled, log_level):
         crawler = ScrapySplashWrapperCrawler(splash_url, ua, depth, log_enabled, log_level)
