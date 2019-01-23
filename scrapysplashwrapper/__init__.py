@@ -1,6 +1,6 @@
 __version__ = '0.1'
 
-from .middleware import ScrapySplashWrapperDepthMiddleware  # flake8: noqa
+from .middleware import ScrapySplashWrapperDepthMiddleware  # noqa
 from .crawler import ScrapySplashWrapperCrawler
 import multiprocessing
 

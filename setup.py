@@ -24,5 +24,4 @@ setup(
         'Topic :: Internet',
     ],
     install_requires=['scrapy', 'scrapy-splash']
-    # test_suite="tests"
 )

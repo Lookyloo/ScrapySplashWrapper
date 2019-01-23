@@ -2,11 +2,7 @@
 # This file is part of Viper - https://github.com/viper-framework/viper
 # See the file 'LICENSE' for copying permission.
 
-try:
-    from urllib.parse import urlparse
-except ImportError:
-    from urlparse import urlparse
-
+from urllib.parse import urlparse
 from scrapy import Spider
 from scrapy.linkextractors import LinkExtractor
 from scrapy.crawler import CrawlerProcess, Crawler
