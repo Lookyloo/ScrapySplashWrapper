@@ -14,6 +14,8 @@ def crawl(splash_url, url, depth=1,
         queue.put(res)
 
     q = multiprocessing.Queue()
+    if not user_agent:
+        user_agent = 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/63.0.3239.132 Safari/537.36'
     p = multiprocessing.Process(target=_crawl, args=(q, splash_url, user_agent, url,
                                                      depth, log_enabled, log_level))
     p.start()
