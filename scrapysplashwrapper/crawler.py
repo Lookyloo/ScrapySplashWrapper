@@ -23,6 +23,7 @@ class ScrapySplashWrapperCrawler():
             yield SplashRequest(self.start_url, self.parse, endpoint='render.json',
                                 args={'har': 1, 'html': 1, 'response_body': 1,
                                       'png': 1, 'wait': 10, 'render_all': 1,
+                                      'resource_timeout': 20, 'timeout': 80,
                                       'iframes': 1})
 
         def parse(self, response):
@@ -31,6 +32,7 @@ class ScrapySplashWrapperCrawler():
                 yield SplashRequest(link.url, self.parse, endpoint='render.json',
                                     args={'har': 1, 'html': 1, 'response_body': 1,
                                           'png': 1, 'wait': 10, 'render_all': 1,
+                                          'resource_timeout': 20, 'timeout': 80,
                                           'iframes': 1})
             yield response.data
 
