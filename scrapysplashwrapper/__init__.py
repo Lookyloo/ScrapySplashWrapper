@@ -15,7 +15,7 @@ def crawl(splash_url: str, url: str, depth: int=1,
         res = crawler.crawl(url)
         queue.put(res)
 
-    q = multiprocessing.Queue()
+    q: multiprocessing.Queue = multiprocessing.Queue()
     if not user_agent:
         user_agent = 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/63.0.3239.132 Safari/537.36'
     p = multiprocessing.Process(target=_crawl, args=(q, splash_url, user_agent, url,

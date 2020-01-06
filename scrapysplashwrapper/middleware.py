@@ -4,8 +4,8 @@
 
 import logging
 
-from scrapy.spidermiddlewares.depth import DepthMiddleware
-from scrapy_splash import SplashRequest
+from scrapy.spidermiddlewares.depth import DepthMiddleware  # type: ignore
+from scrapy_splash import SplashRequest  # type: ignore
 
 logger = logging.getLogger(__name__)
 

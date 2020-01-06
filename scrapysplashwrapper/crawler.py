@@ -3,11 +3,12 @@
 # See the file 'LICENSE' for copying permission.
 
 from urllib.parse import urlparse
-from scrapy import Spider
-from scrapy.linkextractors import LinkExtractor
-from scrapy.crawler import CrawlerProcess, Crawler
-from scrapy import signals
-from scrapy_splash import SplashRequest
+from typing import List
+from scrapy import Spider  # type: ignore
+from scrapy.linkextractors import LinkExtractor  # type: ignore
+from scrapy.crawler import CrawlerProcess, Crawler  # type: ignore
+from scrapy import signals  # type: ignore
+from scrapy_splash import SplashRequest  # type: ignore
 
 
 class ScrapySplashWrapperCrawler():
@@ -15,9 +16,12 @@ class ScrapySplashWrapperCrawler():
     class ScrapySplashWrapperSpider(Spider):
         name = 'ScrapySplashWrapperSpider'
 
-        def __init__(self, url, *args, **kwargs):
-            self.start_url = url
-            self.allowed_domains = ['.'.join(urlparse(url).hostname.split('.')[-2:])]
+        def __init__(self, url: str, *args, **kwargs):
+            self.start_url: str = url
+            self.allowed_domains: List[str] = []
+            hostname = urlparse(self.start_url).hostname
+            if hostname:
+                self.allowed_domains = ['.'.join(hostname.split('.')[-2:])]
 
         def start_requests(self):
             yield SplashRequest(self.start_url, self.parse, endpoint='render.json',
