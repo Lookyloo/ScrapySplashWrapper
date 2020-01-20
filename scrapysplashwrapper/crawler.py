@@ -3,12 +3,62 @@
 # See the file 'LICENSE' for copying permission.
 
 from urllib.parse import urlparse
-from typing import List
+from typing import List, Iterator
 from scrapy import Spider  # type: ignore
 from scrapy.linkextractors import LinkExtractor  # type: ignore
 from scrapy.crawler import CrawlerProcess, Crawler  # type: ignore
 from scrapy import signals  # type: ignore
-from scrapy_splash import SplashRequest  # type: ignore
+from scrapy_splash import SplashRequest, SplashJsonResponse  # type: ignore
+
+script = """
+function main(splash, args)
+    -- Default values
+    splash.js_enabled = true
+    splash.private_mode_enabled = true
+    splash.images_enabled = true
+    splash.webgl_enabled = true
+    splash.media_source_enabled = true
+
+    -- Force enable things
+    splash.plugins_enabled = true
+    splash.request_body_enabled = true
+    splash.response_body_enabled = true
+
+    -- Would be nice
+    splash.indexeddb_enabled = true
+    splash.html5_media_enabled = true
+    splash.http2_enabled = true
+
+    -- User defined
+    splash.resource_timeout = args.resource_timeout
+    splash:set_user_agent(args.useragent)
+   -- Allow to pass cookies
+   if (args.cookies ~= nil) then
+       splash:init_cookies(args.cookies)
+   end
+
+    -- Run
+    ok, reason = splash:go{args.url}
+    if not ok then
+        return {error = reason}
+    end
+    splash:wait{args.wait}
+
+    -- Page instrumentation
+    splash.scroll_position = {y=1000}
+
+    splash:wait{args.wait}
+
+    -- Response
+    return {
+        har = splash:har(),
+        html = splash:html(),
+        png = splash:png{render_all=true},
+        cookies = splash:get_cookies()
+    }
+
+end
+"""
 
 
 class ScrapySplashWrapperCrawler():
@@ -16,36 +66,40 @@ class ScrapySplashWrapperCrawler():
     class ScrapySplashWrapperSpider(Spider):
         name = 'ScrapySplashWrapperSpider'
 
-        def __init__(self, url: str, *args, **kwargs):
+        def __init__(self, url: str, useragent: str, cookies: List[dict]=[], *args, **kwargs):
             self.start_url: str = url
+            self.useragent: str = useragent
             self.allowed_domains: List[str] = []
+            self.cookies: List[dict] = cookies
             hostname = urlparse(self.start_url).hostname
             if hostname:
                 self.allowed_domains = ['.'.join(hostname.split('.')[-2:])]
 
         def start_requests(self):
-            yield SplashRequest(self.start_url, self.parse, endpoint='render.json',
-                                args={'har': 1, 'html': 1, 'response_body': 1,
-                                      'png': 1, 'wait': 10, 'render_all': 1,
-                                      'resource_timeout': 20, 'timeout': 80,
-                                      'iframes': 1})
+            yield SplashRequest(self.start_url, self.parse, endpoint='execute',
+                                args={'wait': 10, 'resource_timeout': 20,
+                                      'useragent': self.useragent,
+                                      'cookies': self.cookies,
+                                      'lua_source': script
+                                      })
 
-        def parse(self, response):
+        def parse(self, response: SplashJsonResponse) -> Iterator[dict]:
             le = LinkExtractor(allow_domains=self.allowed_domains)
             for link in le.extract_links(response):
-                yield SplashRequest(link.url, self.parse, endpoint='render.json',
-                                    args={'har': 1, 'html': 1, 'response_body': 1,
-                                          'png': 1, 'wait': 10, 'render_all': 1,
-                                          'resource_timeout': 20, 'timeout': 80,
-                                          'iframes': 1})
+                yield SplashRequest(link.url, self.parse, endpoint='execute',
+                                    args={'wait': 10, 'resource_timeout': 20,
+                                          'useragent': self.useragent,
+                                          'cookies': response.data['cookies'],
+                                          'lua_source': script
+                                          })
             yield response.data
 
-    def __init__(self, splash_url, useragent, depth=1, log_enabled=False, log_level='WARNING'):
+    def __init__(self, splash_url: str, useragent: str, cookies: List[dict]=[], depth: int=1, log_enabled: bool=False, log_level: str='WARNING'):
+        self.useragent = useragent
         self.process = CrawlerProcess({'LOG_ENABLED': log_enabled})
         self.crawler = Crawler(self.ScrapySplashWrapperSpider, {
             'LOG_ENABLED': log_enabled,
             'LOG_LEVEL': log_level,
-            'USER_AGENT': useragent,
             'SPLASH_URL': splash_url,
             'DOWNLOADER_MIDDLEWARES': {'scrapy_splash.SplashCookiesMiddleware': 723,
                                        'scrapy_splash.SplashMiddleware': 725,
@@ -64,6 +118,6 @@ class ScrapySplashWrapperCrawler():
             crawled_items.append(item)
 
         self.crawler.signals.connect(add_item, signals.item_scraped)
-        self.process.crawl(self.crawler, url=url)
+        self.process.crawl(self.crawler, url=url, useragent=self.useragent)
         self.process.start()
         return crawled_items
