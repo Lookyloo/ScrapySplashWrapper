@@ -1,0 +1,18 @@
+[tool.poetry]
+name = "scrapysplashwrapper"
+version = "0.1.0"
+description = "Scrapy splash wrapper as a standalone library."
+authors = ["Raphaël Vinot <raphael@vinot.info>"]
+license = "BSD-3-Clause"
+
+[tool.poetry.dependencies]
+python = "^3.7"
+scrapy = "^1.8.0"
+scrapy-splash = "^0.7.2"
+
+[tool.poetry.dev-dependencies]
+mypy = "^0.761"
+
+[build-system]
+requires = ["poetry>=0.12"]
+build-backend = "poetry.masonry.api"
