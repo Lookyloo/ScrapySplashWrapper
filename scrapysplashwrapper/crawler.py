@@ -32,10 +32,9 @@ function main(splash, args)
     -- User defined
     splash.resource_timeout = args.resource_timeout
     splash:set_user_agent(args.useragent)
+
    -- Allow to pass cookies
-   if (args.cookies ~= nil) then
-       splash:init_cookies(args.cookies)
-   end
+    splash:init_cookies(args.cookies)
 
     -- Run
     ok, reason = splash:go{args.url}
@@ -96,6 +95,7 @@ class ScrapySplashWrapperCrawler():
 
     def __init__(self, splash_url: str, useragent: str, cookies: List[dict]=[], depth: int=1, log_enabled: bool=False, log_level: str='WARNING'):
         self.useragent = useragent
+        self.cookies = cookies
         self.process = CrawlerProcess({'LOG_ENABLED': log_enabled})
         self.crawler = Crawler(self.ScrapySplashWrapperSpider, {
             'LOG_ENABLED': log_enabled,
@@ -118,6 +118,6 @@ class ScrapySplashWrapperCrawler():
             crawled_items.append(item)
 
         self.crawler.signals.connect(add_item, signals.item_scraped)
-        self.process.crawl(self.crawler, url=url, useragent=self.useragent)
+        self.process.crawl(self.crawler, url=url, useragent=self.useragent, cookies=self.cookies)
         self.process.start()
         return crawled_items
