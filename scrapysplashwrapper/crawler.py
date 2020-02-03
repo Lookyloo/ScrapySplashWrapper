@@ -31,6 +31,7 @@ function main(splash, args)
 
     -- User defined
     splash.resource_timeout = args.resource_timeout
+    splash.timeout = args.timeout
     splash:set_user_agent(args.useragent)
 
    -- Allow to pass cookies
@@ -76,7 +77,8 @@ class ScrapySplashWrapperCrawler():
 
         def start_requests(self):
             yield SplashRequest(self.start_url, self.parse, endpoint='execute',
-                                args={'wait': 10, 'resource_timeout': 20,
+                                args={'wait': 15, 'resource_timeout': 40,
+                                      'timeout': 60,
                                       'useragent': self.useragent,
                                       'cookies': self.cookies,
                                       'lua_source': script
