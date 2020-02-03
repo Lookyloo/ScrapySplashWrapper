@@ -4,6 +4,8 @@ version = "0.1.0"
 description = "Scrapy splash wrapper as a standalone library."
 authors = ["Raphaël Vinot <raphael.vinot@circl.lu>"]
 license = "BSD-3-Clause"
+readme = "README.md"
+
 
 [tool.poetry.dependencies]
 python = "^3.6"
