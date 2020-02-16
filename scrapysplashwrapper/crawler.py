@@ -39,7 +39,9 @@ function main(splash, args)
 
     -- Run
     ok, reason = splash:go{args.url}
-    if not ok then
+    -- The error options are listed here: https://splash.readthedocs.io/en/stable/scripting-ref.html#splash-go
+    -- HTTP errors are fine, we keep going.
+    if not ok and not reason:find("http") then
         return {error = reason}
     end
     splash:wait{args.wait}
