@@ -216,7 +216,7 @@ marker = "python_version >= \"3.5\""
 name = "pyhamcrest"
 optional = false
 python-versions = ">=3.5"
-version = "2.0.0"
+version = "2.0.1"
 
 [[package]]
 category = "main"
@@ -567,8 +567,8 @@ pydispatcher = [
     {file = "PyDispatcher-2.0.5.zip", hash = "sha256:5be4a8be12805ef7d712dd9a93284fb8bc53f309867e573f653a72e5fd10e433"},
 ]
 pyhamcrest = [
-    {file = "PyHamcrest-2.0.0-py3-none-any.whl", hash = "sha256:36cda5e849e3ee9ce54628667471e5e769f596259bb3c13c3596f6059a615ef8"},
-    {file = "PyHamcrest-2.0.0.tar.gz", hash = "sha256:5959cb4ab465b303522d2e0d270a6ee581c3ad9ba419e304bb6ebe50a60ea37a"},
+    {file = "PyHamcrest-2.0.1-py3-none-any.whl", hash = "sha256:55abfc14ec38ed2bd6093add3be72385c1b7fd8e6aeb27448c00f95cb501c60e"},
+    {file = "PyHamcrest-2.0.1.tar.gz", hash = "sha256:9f12b9b3b109d4877b2a1a42a9fb8acbf350213d3b1873eecf6eb07d6ac3caef"},
 ]
 pyopenssl = [
     {file = "pyOpenSSL-19.1.0-py2.py3-none-any.whl", hash = "sha256:621880965a720b8ece2f1b2f54ea2071966ab00e2970ad2ce11d596102063504"},
