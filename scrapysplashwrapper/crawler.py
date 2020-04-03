@@ -4,6 +4,7 @@
 
 import os
 from pathlib import Path
+import logging
 from urllib.parse import urlparse
 from typing import List, Iterator
 from scrapy import Spider  # type: ignore
@@ -18,7 +19,10 @@ class ScrapySplashWrapperCrawler():
     class ScrapySplashWrapperSpider(Spider):
         name = 'ScrapySplashWrapperSpider'
 
-        def __init__(self, url: str, useragent: str, cookies: List[dict]=[], *args, **kwargs):
+        def __init__(self, url: str, useragent: str, cookies: List[dict]=[], log_level: str='WARNING', *args, **kwargs):
+            logger = logging.getLogger('scrapy')
+            logger.setLevel(log_level)
+            super().__init__(*args, **kwargs)
             self.start_url: str = url
             self.useragent: str = useragent
             self.allowed_domains: List[str] = []
@@ -75,6 +79,6 @@ class ScrapySplashWrapperCrawler():
             crawled_items.append(item)
 
         self.crawler.signals.connect(add_item, signals.item_scraped)
-        self.process.crawl(self.crawler, url=url, useragent=self.useragent, cookies=self.cookies)
+        self.process.crawl(self.crawler, url=url, useragent=self.useragent, cookies=self.cookies, log_level=self.log_level)
         self.process.start()
         return crawled_items
