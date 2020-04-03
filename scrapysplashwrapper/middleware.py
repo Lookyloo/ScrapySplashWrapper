@@ -7,12 +7,12 @@ import logging
 from scrapy.spidermiddlewares.depth import DepthMiddleware  # type: ignore
 from scrapy_splash import SplashRequest  # type: ignore
 
-logger = logging.getLogger(__name__)
-
 
 class ScrapySplashWrapperDepthMiddleware(DepthMiddleware):
 
     def process_spider_output(self, response, result, spider):
+        logger = logging.getLogger(__name__)
+
         def _filter(request):
             if isinstance(request, SplashRequest):
                 depth = response.meta['depth'] + 1
@@ -20,7 +20,7 @@ class ScrapySplashWrapperDepthMiddleware(DepthMiddleware):
                 if self.prio:
                     request.priority -= depth * self.prio
                 if self.maxdepth and depth >= self.maxdepth:
-                    logger.info(
+                    logger.debug(
                         "Ignoring link (depth > %(maxdepth)d): %(requrl)s ",
                         {'maxdepth': self.maxdepth, 'requrl': request.url},
                         extra={'spider': spider}

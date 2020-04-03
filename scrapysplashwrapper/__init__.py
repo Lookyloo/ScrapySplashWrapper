@@ -1,9 +1,10 @@
-__version__ = '0.1'
-
 from .middleware import ScrapySplashWrapperDepthMiddleware  # noqa
 from .crawler import ScrapySplashWrapperCrawler
 import multiprocessing
 from typing import List, Optional
+
+import logging
+logging.getLogger(__name__).addHandler(logging.NullHandler())
 
 
 def crawl(splash_url: str, url: str, cookies: List[dict]=[], depth: int=1,
