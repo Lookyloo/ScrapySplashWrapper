@@ -152,16 +152,13 @@ description = "Parsel is a library to extract data from HTML and XML using XPath
 name = "parsel"
 optional = false
 python-versions = "*"
-version = "1.5.2"
+version = "1.6.0"
 
 [package.dependencies]
 cssselect = ">=0.9"
-six = ">=1.5.2"
+lxml = "*"
+six = ">=1.6.0"
 w3lib = ">=1.19.0"
-
-[package.dependencies.lxml]
-python = "<3.4.0 || >=3.5.0"
-version = "*"
 
 [[package]]
 category = "main"
@@ -521,8 +518,8 @@ mypy-extensions = [
     {file = "mypy_extensions-0.4.3.tar.gz", hash = "sha256:2d82818f5bb3e369420cb3c4060a7970edba416647068eb4c5343488a6c604a8"},
 ]
 parsel = [
-    {file = "parsel-1.5.2-py2.py3-none-any.whl", hash = "sha256:74f8e9d3b345b14cb1416bd777a03982cde33a74d8b32e0c71e651d07d41d40a"},
-    {file = "parsel-1.5.2.tar.gz", hash = "sha256:4da4262ba4605573b6b72a5f557616a2fc9dee7a47a1efad562752a28d366723"},
+    {file = "parsel-1.6.0-py2.py3-none-any.whl", hash = "sha256:9e1fa8db1c0b4a878bf34b35c043d89c9d1cbebc23b4d34dbc3c0ec33f2e087d"},
+    {file = "parsel-1.6.0.tar.gz", hash = "sha256:70efef0b651a996cceebc69e55a85eb2233be0890959203ba7c3a03c72725c79"},
 ]
 protego = [
     {file = "Protego-0.1.16.tar.gz", hash = "sha256:a682771bc7b51b2ff41466460896c1a5a653f9a1e71639ef365a72e66d8734b4"},
