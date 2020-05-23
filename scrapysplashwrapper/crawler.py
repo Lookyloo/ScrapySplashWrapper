@@ -49,6 +49,7 @@ class ScrapySplashWrapperCrawler():
                 yield SplashRequest(link.url, self.parse, endpoint='execute',
                                     args={'wait': 10, 'resource_timeout': 20,
                                           'useragent': self.useragent,
+                                          'referer': response.data['last_redirected_url'],
                                           'cookies': response.data['cookies'],
                                           'lua_source': self.script
                                           })

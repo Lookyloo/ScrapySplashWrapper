@@ -25,7 +25,13 @@ function main(splash, args)
     splash:init_cookies(args.cookies)
 
     -- Run
-    ok, reason = splash:go{args.url}
+    if args.referer then
+      ok, reason = splash:go{args.url, headers={
+        ['Referer'] = args.referer,
+      }}
+    else
+      ok, reason = splash:go{args.url}
+    end
 
     -- The error options are listed here: https://splash.readthedocs.io/en/stable/scripting-ref.html#splash-go
     -- HTTP errors are fine, we keep going.
