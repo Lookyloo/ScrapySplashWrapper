@@ -6,7 +6,7 @@ import os
 from pathlib import Path
 import logging
 from urllib.parse import urlparse
-from typing import List, Iterator
+from typing import List, Iterator, Dict, Any
 from scrapy import Spider  # type: ignore
 from scrapy.linkextractors import LinkExtractor  # type: ignore
 from scrapy.crawler import CrawlerProcess, Crawler  # type: ignore
@@ -19,14 +19,14 @@ class ScrapySplashWrapperCrawler():
     class ScrapySplashWrapperSpider(Spider):
         name = 'ScrapySplashWrapperSpider'
 
-        def __init__(self, url: str, useragent: str, cookies: List[dict]=[], log_level: str='WARNING', *args, **kwargs):
+        def __init__(self, url: str, useragent: str, cookies: List[Dict[Any, Any]]=[], log_level: str='WARNING', *args, **kwargs) -> None:
             logger = logging.getLogger('scrapy')
             logger.setLevel(log_level)
             super().__init__(*args, **kwargs)
             self.start_url: str = url
             self.useragent: str = useragent
             self.allowed_domains: List[str] = []
-            self.cookies: List[dict] = cookies
+            self.cookies: List[Dict[Any, Any]] = cookies
             hostname = urlparse(self.start_url).hostname
             if hostname:
                 self.allowed_domains = ['.'.join(hostname.split('.')[-2:])]
@@ -43,7 +43,7 @@ class ScrapySplashWrapperCrawler():
                                       'lua_source': self.script
                                       })
 
-        def parse(self, response: SplashJsonResponse) -> Iterator[dict]:
+        def parse(self, response: SplashJsonResponse) -> Iterator[Dict[Any, Any]]:
             le = LinkExtractor(allow_domains=self.allowed_domains)
             for link in le.extract_links(response):
                 yield SplashRequest(link.url, self.parse, endpoint='execute',
@@ -55,7 +55,7 @@ class ScrapySplashWrapperCrawler():
                                           })
             yield response.data
 
-    def __init__(self, splash_url: str, useragent: str, cookies: List[dict]=[], depth: int=1, log_enabled: bool=False, log_level: str='WARNING'):
+    def __init__(self, splash_url: str, useragent: str, cookies: List[Dict[Any, Any]]=[], depth: int=1, log_enabled: bool=False, log_level: str='WARNING'):
         self.useragent = useragent
         self.cookies = cookies
         self.log_level = log_level
@@ -74,10 +74,10 @@ class ScrapySplashWrapperCrawler():
             'DEPTH_LIMIT': depth
         })
 
-    def crawl(self, url):
+    def crawl(self, url: str) -> List[Any]:
         crawled_items = []
 
-        def add_item(item):
+        def add_item(item) -> None:
             crawled_items.append(item)
 
         self.crawler.signals.connect(add_item, signals.item_scraped)

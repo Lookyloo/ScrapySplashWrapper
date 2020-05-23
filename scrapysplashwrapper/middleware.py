@@ -13,7 +13,7 @@ class ScrapySplashWrapperDepthMiddleware(DepthMiddleware):
     def process_spider_output(self, response, result, spider):
         logger = logging.getLogger(__name__)
 
-        def _filter(request):
+        def _filter(request) -> bool:
             if isinstance(request, SplashRequest):
                 depth = response.meta['depth'] + 1
                 request.meta['depth'] = depth
