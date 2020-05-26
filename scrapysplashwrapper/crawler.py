@@ -18,6 +18,7 @@ class ScrapySplashWrapperCrawler():
 
     class ScrapySplashWrapperSpider(Spider):
         name = 'ScrapySplashWrapperSpider'
+        handle_httpstatus_all = True  # https://docs.scrapy.org/en/latest/topics/spider-middleware.html?highlight=handle_httpstatus_all#std-reqmeta-handle_httpstatus_all
 
         def __init__(self, url: str, useragent: str, cookies: List[Dict[Any, Any]]=[], log_level: str='WARNING', *args, **kwargs) -> None:
             logger = logging.getLogger('scrapy')
