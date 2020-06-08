@@ -9,10 +9,9 @@ setup(
     author='Raphaël Vinot',
     author_email='raphael.vinot@circl.lu',
     maintainer='Raphaël Vinot',
-    url='https://github.com/viper-framework/scrapysplashwrapper',
+    url='https://github.com/Lookyloo/scrapysplashwrapper',
     description='Scrapy splash wrapper as a standalone library.',
     packages=['scrapysplashwrapper'],
-    scripts=['bin/scraper'],
     classifiers=[
         'License :: OSI Approved :: BSD License',
         'Operating System :: POSIX :: Linux',
