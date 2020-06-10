@@ -1,6 +1,6 @@
 [tool.poetry]
 name = "scrapysplashwrapper"
-version = "1.0"
+version = "1.1"
 description = "Scrapy splash wrapper as a standalone library."
 authors = ["Raphaël Vinot <raphael.vinot@circl.lu>"]
 license = "BSD-3-Clause"
