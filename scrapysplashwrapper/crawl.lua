@@ -34,16 +34,21 @@ function main(splash, args)
     end
 
     -- The error options are listed here: https://splash.readthedocs.io/en/stable/scripting-ref.html#splash-go
-    -- HTTP errors are fine, we keep going.
-    if not ok and not reason:find("http") then
-        return {error = reason}
+    -- If not OK, we still want to return whatever we can, but no need to wait.
+    -- Note that the errors will only concern the main webpage and redirects, not any of the resources.
+    if ok then
+        err = nil
+        splash:wait{args.wait}
+
+        splash:set_viewport_full()
+
+        -- Page instrumentation
+        splash.scroll_position = {y=1000}
+
+        splash:wait{args.wait}
+    else
+        err = reason
     end
-    splash:wait{args.wait}
-
-    -- Page instrumentation
-    splash.scroll_position = {y=1000}
-
-    splash:wait{args.wait}
 
     -- Response
     return {
@@ -51,6 +56,7 @@ function main(splash, args)
         html = splash:html(),
         png = splash:png{render_all=true},
         cookies = splash:get_cookies(),
-		last_redirected_url = splash:url()
+		last_redirected_url = splash:url(),
+        error = err
     }
 end

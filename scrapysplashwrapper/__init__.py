@@ -74,15 +74,18 @@ def main():
     width = len(str(len(items)))
     i = 1
     for item in items:
-        with open(os.path.join(dirpath, '{0:0{width}}.json'.format(i, width=width)), 'w') as f:
-            json.dump(item, f)
+        with open(os.path.join(dirpath, '{0:0{width}}.json'.format(i, width=width)), 'w') as _json:
+            json.dump(item, _json)
+
         png = item['png']
-        with open(os.path.join(dirpath, '{0:0{width}}.png'.format(i, width=width)), 'wb') as f:
-            f.write(base64.b64decode(png))
+        with open(os.path.join(dirpath, '{0:0{width}}.png'.format(i, width=width)), 'wb') as _png:
+            _png.write(base64.b64decode(png))
+
         harfile = item['har']
-        with open(os.path.join(dirpath, '{0:0{width}}.har'.format(i, width=width)), 'w') as f:
-            json.dump(harfile, f)
+        with open(os.path.join(dirpath, '{0:0{width}}.har'.format(i, width=width)), 'w') as _har:
+            json.dump(harfile, _har)
+
         htmlfile = item['html']
-        with open(os.path.join(dirpath, '{0:0{width}}.html'.format(i, width=width)), 'w') as f:
-            json.dump(htmlfile, f)
+        with open(os.path.join(dirpath, '{0:0{width}}.html'.format(i, width=width)), 'w') as _html:
+            json.dump(htmlfile, _html)
         i += 1
