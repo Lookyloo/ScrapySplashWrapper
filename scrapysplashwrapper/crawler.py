@@ -6,7 +6,7 @@ import os
 from pathlib import Path
 import logging
 from urllib.parse import urlparse
-from typing import List, Iterator, Dict, Any
+from typing import List, Iterator, Dict, Any, Optional
 from scrapy import Spider  # type: ignore
 from scrapy.linkextractors import LinkExtractor  # type: ignore
 from scrapy.crawler import CrawlerProcess, Crawler  # type: ignore
@@ -58,7 +58,7 @@ class ScrapySplashWrapperCrawler():
         name = 'ScrapySplashWrapperSpider'
         handle_httpstatus_all = True  # https://docs.scrapy.org/en/latest/topics/spider-middleware.html?highlight=handle_httpstatus_all#std-reqmeta-handle_httpstatus_all
 
-        def __init__(self, url: str, useragent: str, cookies: List[Dict[Any, Any]]=[], log_level: str='WARNING', *args, **kwargs) -> None:
+        def __init__(self, url: str, useragent: str, cookies: List[Dict[Any, Any]]=[], referer: Optional[str]=None, log_level: str='WARNING', *args, **kwargs) -> None:
             logger = logging.getLogger('scrapy')
             logger.setLevel(log_level)
             super().__init__(*args, **kwargs)
@@ -66,6 +66,7 @@ class ScrapySplashWrapperCrawler():
             self.useragent: str = useragent
             self.allowed_domains: List[str] = []
             self.cookies: List[Dict[Any, Any]] = cookies
+            self.referer: Optional[str] = referer
             hostname = urlparse(self.start_url).hostname
             if hostname:
                 self.allowed_domains = ['.'.join(hostname.split('.')[-2:])]
@@ -78,6 +79,7 @@ class ScrapySplashWrapperCrawler():
                                 args={'wait': 15, 'resource_timeout': 40,
                                       'timeout': 60,
                                       'useragent': self.useragent,
+                                      'referer': self.referer,
                                       'cookies': self.cookies,
                                       'lua_source': self.script
                                       })
@@ -94,9 +96,10 @@ class ScrapySplashWrapperCrawler():
                                           })
             yield response.data
 
-    def __init__(self, splash_url: str, useragent: str, cookies: List[Dict[Any, Any]]=[], depth: int=1, log_enabled: bool=False, log_level: str='WARNING'):
+    def __init__(self, splash_url: str, useragent: str, cookies: List[Dict[Any, Any]]=[], referer: Optional[str]=None, depth: int=1, log_enabled: bool=False, log_level: str='WARNING'):
         self.useragent = useragent
         self.cookies = cookies
+        self.referer = referer
         self.log_level = log_level
         self.process = CrawlerProcess({'LOG_ENABLED': log_enabled})
         self.crawler = Crawler(self.ScrapySplashWrapperSpider, {
@@ -131,6 +134,6 @@ class ScrapySplashWrapperCrawler():
             crawled_items.append(item)
 
         self.crawler.signals.connect(add_item, signals.item_scraped)
-        self.process.crawl(self.crawler, url=url, useragent=self.useragent, cookies=self.cookies, log_level=self.log_level)
+        self.process.crawl(self.crawler, url=url, useragent=self.useragent, cookies=self.cookies, referer=self.referer, log_level=self.log_level)
         self.process.start()
         return crawled_items
