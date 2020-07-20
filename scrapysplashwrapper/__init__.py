@@ -26,7 +26,7 @@ def crawl(splash_url: str, url: str, cookies: List[Dict[Any, Any]]=[], referer: 
     logger.setLevel(log_level)
 
     def _crawl(queue, splash_url: str, ua: str, url: str,
-               cookies: List[Dict[Any, Any]], referer: Optional[str],
+               cookies: List[Dict[Any, Any]], referer: str,
                depth: int, log_enabled: bool, log_level: str) -> None:
         crawler = ScrapySplashWrapperCrawler(splash_url, ua, cookies, referer, depth, log_enabled, log_level)
         res = crawler.crawl(url)
