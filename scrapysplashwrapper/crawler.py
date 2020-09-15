@@ -77,10 +77,10 @@ class ScrapySplashWrapperCrawler():
         def start_requests(self):
             yield SplashRequest(self.start_url, self.parse, endpoint='execute',
                                 args={'wait': 15, 'resource_timeout': 40,
-                                      'timeout': 60,
+                                      'timeout': 90,
                                       'useragent': self.useragent,
                                       'referer': self.referer,
-                                      'cookies': self.cookies,
+                                      'cookies': [{k: v for k, v in cookie.items() if v is not None} for cookie in self.cookies],
                                       'lua_source': self.script
                                       })
 
