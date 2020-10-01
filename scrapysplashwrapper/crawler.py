@@ -10,7 +10,7 @@ from typing import List, Iterator, Dict, Any
 from scrapy import Spider  # type: ignore
 from scrapy.linkextractors import LinkExtractor  # type: ignore
 from scrapy.crawler import CrawlerProcess, Crawler  # type: ignore
-from scrapy import signals  # type: ignore
+from scrapy import signals
 from scrapy_splash import SplashRequest, SplashJsonResponse  # type: ignore
 
 # Mapping from https://doc.qt.io/qt-5/qnetworkreply.html#NetworkError-enum

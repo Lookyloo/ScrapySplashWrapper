@@ -24,6 +24,9 @@ function main(splash, args)
    -- Allow to pass cookies
     splash:init_cookies(args.cookies)
 
+    -- Set a reasonable viewport
+    splash:set_viewport_size(1280, 800)
+
     -- Run
     if args.referer then
       ok, reason = splash:go{args.url, headers={
