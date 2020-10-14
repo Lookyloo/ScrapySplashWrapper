@@ -1,9 +1,9 @@
 # ScrapySplashWrapper
-A wrapper that uses scrappy and splash to crawl a website.
+A wrapper is uses for scrapy and splash to crawl a website.
 
 # Usage
 
-*Warning*: it requires a splash instance (docker is recommendended).
+*Warning*: it requires a splash instance (Here docker is recommendended).
 
 ```
 usage: scraper [-h] [-s SPLASH] -u URL [-d DEPTH] [-o OUTPUT] [-ua USERAGENT]
