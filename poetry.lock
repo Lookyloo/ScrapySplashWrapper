@@ -105,7 +105,7 @@ scripts = ["click (>=6.0)", "twisted (>=16.4.0)"]
 
 [[package]]
 name = "itemadapter"
-version = "0.1.1"
+version = "0.2.0"
 description = "Common interface for data container classes"
 category = "main"
 optional = false
@@ -501,8 +501,8 @@ incremental = [
     {file = "incremental-17.5.0.tar.gz", hash = "sha256:7b751696aaf36eebfab537e458929e194460051ccad279c72b755a167eebd4b3"},
 ]
 itemadapter = [
-    {file = "itemadapter-0.1.1-py3-none-any.whl", hash = "sha256:896986897b1a2d9e1eb0cc5f6c2e834177adae577a3ba81694e7bb3ee6359bd5"},
-    {file = "itemadapter-0.1.1.tar.gz", hash = "sha256:b5e75d48c769ee5c89de12aeba537b2d62d7b575cd549d5d430ed8a67faa63f2"},
+    {file = "itemadapter-0.2.0-py3-none-any.whl", hash = "sha256:5327c2136353cb965b6b4ba564af002fd458691b8e30d3bd6b14c474d92c6b25"},
+    {file = "itemadapter-0.2.0.tar.gz", hash = "sha256:cb7aaa577fefe2aa6f229ccf4d058e05f44e0178a98c8fb70ee4d95acfabb423"},
 ]
 itemloaders = [
     {file = "itemloaders-1.0.3-py3-none-any.whl", hash = "sha256:d8f92a93d0cc9f5a7f72f01562539cb7030f7741758e764a0a8716f9b0210f7a"},
