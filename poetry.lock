@@ -113,11 +113,11 @@ python-versions = ">=3.6"
 
 [[package]]
 name = "itemloaders"
-version = "1.0.3"
+version = "1.0.4"
 description = "Base library for scrapy's ItemLoader"
 category = "main"
 optional = false
-python-versions = ">=3.5"
+python-versions = ">=3.6"
 
 [package.dependencies]
 itemadapter = ">=0.1.0"
@@ -273,7 +273,7 @@ python-versions = "*"
 
 [[package]]
 name = "scrapy"
-version = "2.4.0"
+version = "2.4.1"
 description = "A high-level Web Crawling and Web Scraping framework"
 category = "main"
 optional = false
@@ -505,8 +505,8 @@ itemadapter = [
     {file = "itemadapter-0.2.0.tar.gz", hash = "sha256:cb7aaa577fefe2aa6f229ccf4d058e05f44e0178a98c8fb70ee4d95acfabb423"},
 ]
 itemloaders = [
-    {file = "itemloaders-1.0.3-py3-none-any.whl", hash = "sha256:d8f92a93d0cc9f5a7f72f01562539cb7030f7741758e764a0a8716f9b0210f7a"},
-    {file = "itemloaders-1.0.3.tar.gz", hash = "sha256:a7803a1c27177d73329a0cc83a9c10de50fa4d4f37970e0194e8ae24b1fb7066"},
+    {file = "itemloaders-1.0.4-py3-none-any.whl", hash = "sha256:4cb46a0f8915e910c770242ae3b60b1149913ed37162804f1e40e8535d6ec497"},
+    {file = "itemloaders-1.0.4.tar.gz", hash = "sha256:1277cd8ca3e4c02dcdfbc1bcae9134ad89acfa6041bd15b4561c6290203a0c96"},
 ]
 jmespath = [
     {file = "jmespath-0.10.0-py2.py3-none-any.whl", hash = "sha256:cdf6525904cc597730141d61b36f2e4b8ecc257c420fa2f4549bac2c2d0cb72f"},
@@ -631,8 +631,8 @@ queuelib = [
     {file = "queuelib-1.5.0.tar.gz", hash = "sha256:42b413295551bdc24ed9376c1a2cd7d0b1b0fa4746b77b27ca2b797a276a1a17"},
 ]
 scrapy = [
-    {file = "Scrapy-2.4.0-py2.py3-none-any.whl", hash = "sha256:6dace3499c8ca5bef1b7bb8a517cdfcc12c1e685f7ec4158f6e48f2d706e7c1d"},
-    {file = "Scrapy-2.4.0.tar.gz", hash = "sha256:4ea7fbc902ee0b0a79b154d07a5f4e747e2146f272a748557941946000728479"},
+    {file = "Scrapy-2.4.1-py2.py3-none-any.whl", hash = "sha256:27621ab491706ec8cc41168cdbdff07e7fe8c344c8640e9e9faebd7cf84008e2"},
+    {file = "Scrapy-2.4.1.tar.gz", hash = "sha256:68c48f01a58636bdf0f6fcd5035a19ecf277b58af24bd70c36dc6e556df3e005"},
 ]
 scrapy-splash = [
     {file = "scrapy-splash-0.7.2.tar.gz", hash = "sha256:089188b11202813b14b88d3be008641a2b3d36e82fadd4a6c61f0af59b66e7b5"},
