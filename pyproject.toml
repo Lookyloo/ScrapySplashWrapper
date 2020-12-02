@@ -23,7 +23,7 @@ scraper = "scrapysplashwrapper:main"
 [tool.poetry.dependencies]
 python = "^3.7"
 scrapy-splash = "^0.7.2"
-Scrapy = "^2.3.0"
+Scrapy = "^2.4.1"
 
 [tool.poetry.dev-dependencies]
 mypy = "^0.790"
