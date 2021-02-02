@@ -27,7 +27,7 @@ Scrapy = "^2.4.1"
 
 [tool.poetry.dev-dependencies]
 mypy = "^0.800"
-ipython = "^7.19.0"
+ipython = "^7.20.0"
 
 [build-system]
 requires = ["poetry_core>=1.0", "setuptools"]
