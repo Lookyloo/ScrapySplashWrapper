@@ -6,6 +6,7 @@ authors = ["Raphaël Vinot <raphael.vinot@circl.lu>"]
 license = "BSD-3-Clause"
 repository = "https://github.com/Lookyloo/ScrapySplashWrapper"
 readme = "README.md"
+documentation = "https://scrapysplashwrapper.readthedocs.io/en/latest/"
 
 classifiers=[
     'License :: OSI Approved :: BSD License',
