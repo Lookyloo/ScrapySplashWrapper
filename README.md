@@ -1,3 +1,5 @@
+[![Documentation Status](https://readthedocs.org/projects/scrapysplashwrapper/badge/?version=latest)](https://scrapysplashwrapper.readthedocs.io/en/latest/?badge=latest)
+
 # ScrapySplashWrapper
 A wrapper that uses scrappy and splash to crawl a website.
 

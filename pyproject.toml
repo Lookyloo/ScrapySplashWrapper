@@ -17,6 +17,8 @@ classifiers=[
     'Topic :: Internet',
 ]
 
+include = ['README.md']
+
 [tool.poetry.scripts]
 scraper = "scrapysplashwrapper:main"
 
@@ -24,10 +26,15 @@ scraper = "scrapysplashwrapper:main"
 python = "^3.8"
 scrapy-splash = "^0.7.2"
 Scrapy = "^2.4.1"
+Sphinx = { version = "^3.5.3", optional = true }
+myst-parser = { version = "^0.13.5", optional = true }
 
 [tool.poetry.dev-dependencies]
 mypy = "^0.812"
 ipython = "^7.22.0"
+
+[tool.poetry.extras]
+docs = ["Sphinx", "myst-parser"]
 
 [build-system]
 requires = ["poetry_core>=1.0", "setuptools"]
