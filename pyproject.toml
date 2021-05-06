@@ -32,7 +32,7 @@ myst-parser = { version = ">=0.13.5,<0.15.0", optional = true }
 
 [tool.poetry.dev-dependencies]
 mypy = "^0.812"
-ipython = "^7.23.0"
+ipython = "^7.23.1"
 
 [tool.poetry.extras]
 docs = ["Sphinx", "myst-parser"]
