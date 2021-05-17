@@ -96,7 +96,7 @@ class ScrapySplashWrapperCrawler():
                                           })
             yield response.data
 
-    def __init__(self, splash_url: str, useragent: str, cookies: List[Dict[Any, Any]]=[], referer: str='', depth: int=1, log_enabled: bool=False, log_level: str='WARNING'):
+    def __init__(self, *, splash_url: str, useragent: str, cookies: List[Dict[Any, Any]]=[], referer: str='', depth: int=1, log_enabled: bool=False, log_level: str='WARNING'):
         self.useragent = useragent
         self.cookies = cookies
         self.referer = referer
