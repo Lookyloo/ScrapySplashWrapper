@@ -14,7 +14,7 @@ function main(splash, args)
     -- Would be nice
     splash.indexeddb_enabled = true
     splash.html5_media_enabled = true
-    splash.http2_enabled = true
+    splash.http2_enabled = false
 
     -- User defined
     splash.resource_timeout = args.resource_timeout
