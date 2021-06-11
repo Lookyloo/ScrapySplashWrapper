@@ -25,7 +25,7 @@ def crawl(splash_url: str, url: str, *, cookies: List[Dict[Any, Any]]=[], refere
     logger = logging.getLogger(__name__)
     logger.setLevel(log_level)
 
-    def _crawl(queue, splash_url: str, ua: str, url: str,
+    def _crawl(queue: multiprocessing.Queue[Any], splash_url: str, ua: str, url: str,
                cookies: List[Dict[Any, Any]], referer: str,
                depth: int, log_enabled: bool, log_level: str) -> None:
         crawler = ScrapySplashWrapperCrawler(splash_url=splash_url, useragent=ua, cookies=cookies,
@@ -43,7 +43,7 @@ def crawl(splash_url: str, url: str, *, cookies: List[Dict[Any, Any]]=[], refere
     return res
 
 
-def main():
+def main() -> None:
     parser = argparse.ArgumentParser(description='Crawl a URL.')
     parser.add_argument("-s", "--splash", default='http://127.0.0.1:8050', help="Splash URL to use for crawling.")
     parser.add_argument("-u", "--url", required=True, help="URL to crawl")

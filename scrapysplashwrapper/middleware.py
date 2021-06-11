@@ -10,10 +10,10 @@ from scrapy_splash import SplashRequest  # type: ignore
 
 class ScrapySplashWrapperDepthMiddleware(DepthMiddleware):
 
-    def process_spider_output(self, response, result, spider):
+    def process_spider_output(self, response, result, spider):  # type: ignore
         logger = logging.getLogger(__name__)
 
-        def _filter(request) -> bool:
+        def _filter(request: SplashRequest) -> bool:
             if isinstance(request, SplashRequest):
                 depth = response.meta['depth'] + 1
                 request.meta['depth'] = depth

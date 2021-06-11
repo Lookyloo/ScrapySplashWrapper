@@ -58,7 +58,7 @@ class ScrapySplashWrapperCrawler():
         name = 'ScrapySplashWrapperSpider'
         handle_httpstatus_all = True  # https://docs.scrapy.org/en/latest/topics/spider-middleware.html?highlight=handle_httpstatus_all#std-reqmeta-handle_httpstatus_all
 
-        def __init__(self, url: str, useragent: str, cookies: List[Dict[Any, Any]]=[], referer: str='', log_level: str='WARNING', *args, **kwargs) -> None:
+        def __init__(self, url: str, useragent: str, cookies: List[Dict[Any, Any]]=[], referer: str='', log_level: str='WARNING', *args: Any, **kwargs: Any) -> None:
             logger = logging.getLogger('scrapy')
             logger.setLevel(log_level)
             super().__init__(*args, **kwargs)
@@ -74,7 +74,7 @@ class ScrapySplashWrapperCrawler():
             with (realpath / 'crawl.lua').open() as _crawl:
                 self.script = _crawl.read()
 
-        def start_requests(self):
+        def start_requests(self) -> Iterator[SplashRequest]:
             yield SplashRequest(self.start_url, self.parse, endpoint='execute',
                                 args={'wait': 15, 'resource_timeout': 40,
                                       'timeout': 90,
@@ -119,7 +119,7 @@ class ScrapySplashWrapperCrawler():
     def crawl(self, url: str) -> List[Any]:
         crawled_items = []
 
-        def add_item(item) -> None:
+        def add_item(item: Dict[str, Any]) -> None:
             if 'error' in item:
                 key = item.pop('error')
                 error = {'key': key, 'details': "Unknown error, see https://doc.qt.io/qt-5/qnetworkreply.html#NetworkError-enum"}
