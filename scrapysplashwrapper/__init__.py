@@ -7,7 +7,7 @@ import json
 import os
 import sys
 from datetime import datetime
-import multiprocessing
+from multiprocessing import Queue, Process
 from typing import List, Dict, Any, Optional
 
 from .middleware import ScrapySplashWrapperDepthMiddleware  # noqa
@@ -28,7 +28,7 @@ def crawl(splash_url: str, url: str, *, cookies: Optional[List[Dict[Any, Any]]]=
     if cookies is None:
         cookies = []
 
-    def _crawl(queue, splash_url: str, ua: str, url: str,  # type: ignore
+    def _crawl(queue: 'Queue[Any]', splash_url: str, ua: str, url: str,
                cookies: List[Dict[Any, Any]], referer: str,
                depth: int, log_enabled: bool, log_level: str) -> None:
         crawler = ScrapySplashWrapperCrawler(splash_url=splash_url, useragent=ua, cookies=cookies,
@@ -36,10 +36,10 @@ def crawl(splash_url: str, url: str, *, cookies: Optional[List[Dict[Any, Any]]]=
         res = crawler.crawl(url)
         queue.put(res)
 
-    q: multiprocessing.Queue[Any] = multiprocessing.Queue()
-    p = multiprocessing.Process(target=_crawl, args=(q, splash_url, user_agent, url,
-                                                     cookies, referer, depth,
-                                                     log_enabled, log_level))
+    q: Queue[Any] = Queue()
+    p = Process(target=_crawl, args=(q, splash_url, user_agent, url,
+                                     cookies, referer, depth,
+                                     log_enabled, log_level))
     p.start()
     res = q.get()
     p.join()
