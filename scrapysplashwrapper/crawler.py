@@ -58,7 +58,7 @@ class ScrapySplashWrapperCrawler():
         name = 'ScrapySplashWrapperSpider'
         handle_httpstatus_all = True  # https://docs.scrapy.org/en/latest/topics/spider-middleware.html?highlight=handle_httpstatus_all#std-reqmeta-handle_httpstatus_all
 
-        def __init__(self, url: str, useragent: str, cookies: Optional[List[Dict[Any, Any]]]=None, referer: str='', log_level: str='WARNING', *args: Any, **kwargs: Any) -> None:
+        def __init__(self, url: str, useragent: str, cookies: Optional[List[Dict[Any, Any]]]=None, referer: str='', proxy: str='', log_level: str='WARNING', *args: Any, **kwargs: Any) -> None:
             logger = logging.getLogger('scrapy')
             logger.setLevel(log_level)
             super().__init__(*args, **kwargs)
@@ -69,6 +69,12 @@ class ScrapySplashWrapperCrawler():
                 cookies = []
             self.cookies: List[Dict[Any, Any]] = cookies
             self.referer: str = referer
+            if proxy.strip():
+                parsed_proxy = urlparse(proxy)
+                self.proxy_hostname = parsed_proxy.hostname
+                self.proxy_port = parsed_proxy.port
+                self.proxy_scheme = parsed_proxy.scheme
+                
             hostname = urlparse(self.start_url).hostname
             if hostname:
                 self.allowed_domains = ['.'.join(hostname.split('.')[-2:])]
@@ -83,6 +89,7 @@ class ScrapySplashWrapperCrawler():
                                       'useragent': self.useragent,
                                       'referer': self.referer,
                                       'cookies': [{k: v for k, v in cookie.items() if v is not None} for cookie in self.cookies],
+                                      'myproxy': {"host": self.proxy_hostname, "port": self.proxy_port, "type": self.proxy_scheme},
                                       'lua_source': self.script
                                       })
 
@@ -93,7 +100,7 @@ class ScrapySplashWrapperCrawler():
                                     args={'wait': 10, 'resource_timeout': 20,
                                           'useragent': self.useragent,
                                           'referer': response.data['last_redirected_url'],
-                                          'cookies': response.data['cookies'],
+                                          'cookies': response.data['cookies'], 
                                           'lua_source': self.script
                                           })
             yield response.data
