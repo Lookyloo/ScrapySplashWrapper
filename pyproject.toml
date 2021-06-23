@@ -30,7 +30,7 @@ Scrapy = "^2.5.0"
 Sphinx = { version = "^4.0", optional = true }
 
 [tool.poetry.dev-dependencies]
-mypy = "^0.902"
+mypy = "^0.910"
 ipython = "^7.23.1"
 
 [tool.poetry.extras]
