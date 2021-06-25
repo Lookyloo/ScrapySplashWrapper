@@ -70,15 +70,14 @@ class ScrapySplashWrapperCrawler():
             self.cookies: List[Dict[Any, Any]] = cookies
             self.referer: str = referer
             self.proxy: str = proxy
-            print("\n\n")
-            print(self.proxy)
-            print("\n\n")
             if self.proxy.strip():
                 parsed_proxy = urlparse(proxy)
                 self.proxy_hostname = parsed_proxy.hostname
                 self.proxy_port = parsed_proxy.port
                 self.proxy_scheme = parsed_proxy.scheme
-                     
+            else:
+                self.proxy_hostname = self.proxy_port = self.proxy_scheme = ''
+
             hostname = urlparse(self.start_url).hostname
             if hostname:
                 self.allowed_domains = ['.'.join(hostname.split('.')[-2:])]
