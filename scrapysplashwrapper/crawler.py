@@ -71,6 +71,7 @@ class ScrapySplashWrapperCrawler():
                 cookies = []
             self.cookies: List[Dict[Any, Any]] = cookies
             self.referer: str = referer
+
             self.proxy: Dict[str, str] = {}
             if proxy:
                 parsed_proxy = urlparse(proxy)
@@ -85,6 +86,7 @@ class ScrapySplashWrapperCrawler():
 
                 if any((self.proxy['username'], self.proxy['password'])) and not all((self.proxy['username'], self.proxy['password'])):
                     raise InvalidProxy(proxy, 'If the proxy requires a username, it also requires a password.')
+
 
             hostname = urlparse(self.start_url).hostname
             if hostname:
