@@ -70,13 +70,15 @@ class ScrapySplashWrapperCrawler():
             self.cookies: List[Dict[Any, Any]] = cookies
             self.referer: str = referer
             self.proxy: str = proxy
+            self.proxy_hostname = self.proxy_port = self.proxy_username = self.proxy_password = self.proxy_scheme = ''
             if self.proxy.strip():
                 parsed_proxy = urlparse(proxy)
                 self.proxy_hostname = parsed_proxy.hostname
                 self.proxy_port = parsed_proxy.port
                 self.proxy_scheme = parsed_proxy.scheme
-            else:
-                self.proxy_hostname = self.proxy_port = self.proxy_scheme = ''
+                if parsed_proxy.username:
+                    self.proxy_username = parsed_proxy.username
+                    self.proxy_password = parsed_proxy.password
 
             hostname = urlparse(self.start_url).hostname
             if hostname:
@@ -92,7 +94,11 @@ class ScrapySplashWrapperCrawler():
                                       'useragent': self.useragent,
                                       'referer': self.referer,
                                       'cookies': [{k: v for k, v in cookie.items() if v is not None} for cookie in self.cookies],
-                                      'myproxy': {"host": self.proxy_hostname, "port": self.proxy_port, "type": self.proxy_scheme},
+                                      'myproxy': {"host": self.proxy_hostname, 
+                                                  "port": self.proxy_port,
+                                                  "username": self.proxy_username,
+                                                  "password": self.proxy_password,
+                                                  "type": self.proxy_scheme},
                                       'lua_source': self.script
                                       })
 
