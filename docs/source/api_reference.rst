@@ -9,3 +9,9 @@ Entry point
 
 .. automodule:: scrapysplashwrapper
    :members:
+
+Exceptions
+----------
+
+.. automodule:: scrapysplashwrapper.exceptions
+   :members:

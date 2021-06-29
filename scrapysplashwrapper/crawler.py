@@ -13,6 +13,8 @@ from scrapy.crawler import CrawlerProcess, Crawler  # type: ignore
 from scrapy import signals
 from scrapy_splash import SplashRequest, SplashJsonResponse  # type: ignore
 
+from .exceptions import InvalidProxy
+
 # Mapping from https://doc.qt.io/qt-5/qnetworkreply.html#NetworkError-enum
 error_mapping = {
     'http': "HTTP Error {}",
@@ -69,16 +71,22 @@ class ScrapySplashWrapperCrawler():
                 cookies = []
             self.cookies: List[Dict[Any, Any]] = cookies
             self.referer: str = referer
-            self.proxy: str = proxy
-            self.proxy_hostname = self.proxy_port = self.proxy_username = self.proxy_password = self.proxy_scheme = ''
-            if self.proxy.strip():
+
+            self.proxy: Dict[str, str] = {}
+            if proxy:
                 parsed_proxy = urlparse(proxy)
-                self.proxy_hostname = parsed_proxy.hostname
-                self.proxy_port = parsed_proxy.port
-                self.proxy_scheme = parsed_proxy.scheme
-                if parsed_proxy.username:
-                    self.proxy_username = parsed_proxy.username
-                    self.proxy_password = parsed_proxy.password
+                self.proxy['host'] = parsed_proxy.hostname if parsed_proxy.hostname else ''
+                self.proxy['port'] = str(parsed_proxy.port) if parsed_proxy.port else ''
+                self.proxy['type'] = parsed_proxy.scheme if parsed_proxy.scheme else ''
+                self.proxy['username'] = parsed_proxy.username if parsed_proxy.username else ''
+                self.proxy['password'] = parsed_proxy.password if parsed_proxy.password else ''
+                if not all((self.proxy['host'], self.proxy['port'], self.proxy['type'])):
+                    # If we have a proxy, host, port and type are required
+                    raise InvalidProxy(proxy, 'A valid proxy requires at least a type, hostname and port.')
+
+                if any((self.proxy['username'], self.proxy['password'])) and not all((self.proxy['username'], self.proxy['password'])):
+                    raise InvalidProxy(proxy, 'If the proxy requires a username, it also requires a password.')
+
 
             hostname = urlparse(self.start_url).hostname
             if hostname:
@@ -94,11 +102,7 @@ class ScrapySplashWrapperCrawler():
                                       'useragent': self.useragent,
                                       'referer': self.referer,
                                       'cookies': [{k: v for k, v in cookie.items() if v is not None} for cookie in self.cookies],
-                                      'myproxy': {"host": self.proxy_hostname, 
-                                                  "port": self.proxy_port,
-                                                  "username": self.proxy_username,
-                                                  "password": self.proxy_password,
-                                                  "type": self.proxy_scheme},
+                                      'myproxy': self.proxy,
                                       'lua_source': self.script
                                       })
 
@@ -109,7 +113,8 @@ class ScrapySplashWrapperCrawler():
                                     args={'wait': 10, 'resource_timeout': 20,
                                           'useragent': self.useragent,
                                           'referer': response.data['last_redirected_url'],
-                                          'cookies': response.data['cookies'], 
+                                          'cookies': response.data['cookies'],
+                                          'myproxy': self.proxy,
                                           'lua_source': self.script
                                           })
             yield response.data
@@ -120,7 +125,7 @@ class ScrapySplashWrapperCrawler():
             cookies = []
         self.cookies = cookies
         self.referer = referer
-        self.proxy = proxy
+        self.proxy = proxy.strip()
         self.log_level = log_level
         self.process = CrawlerProcess({'LOG_ENABLED': log_enabled})
         self.crawler = Crawler(self.ScrapySplashWrapperSpider, {

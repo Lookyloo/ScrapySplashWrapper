@@ -1,6 +1,6 @@
 [tool.poetry]
 name = "scrapysplashwrapper"
-version = "1.6.1"
+version = "1.6.2"
 description = "Scrapy splash wrapper as a standalone library."
 authors = ["Raphaël Vinot <raphael.vinot@circl.lu>"]
 license = "BSD-3-Clause"
@@ -31,7 +31,7 @@ Sphinx = { version = "^4.0", optional = true }
 
 [tool.poetry.dev-dependencies]
 mypy = "^0.910"
-ipython = "^7.23.1"
+ipython = "^7.25.0"
 
 [tool.poetry.extras]
 docs = ["Sphinx", "myst-parser"]
