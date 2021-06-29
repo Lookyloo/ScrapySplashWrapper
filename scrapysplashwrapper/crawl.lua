@@ -27,14 +27,14 @@ function main(splash, args)
     -- Set a reasonable viewport
     splash:set_viewport_size(1280, 800)
 
-    -- Set proxy 
-    if args.myproxy['host'] ~= '' then
+    -- Set proxy
+    if next(args.myproxy) then
         splash:on_request(function(request)
             request:set_proxy{
                 host = args.myproxy['host'],
                 port = args.myproxy['port'],
-                username = '',
-                password = '',
+                username = args.myproxy['username'],
+                password = args.myproxy['password'],
                 type = args.myproxy['type']}
             end)
     end
