@@ -6,7 +6,7 @@ import os
 from pathlib import Path
 import logging
 from urllib.parse import urlparse
-from typing import List, Iterator, Dict, Any, Optional
+from typing import List, Iterator, Dict, Any
 from scrapy import Spider  # type: ignore
 from scrapy.linkextractors import LinkExtractor  # type: ignore
 from scrapy.crawler import CrawlerProcess, Crawler  # type: ignore
@@ -60,15 +60,15 @@ class ScrapySplashWrapperCrawler():
         name = 'ScrapySplashWrapperSpider'
         handle_httpstatus_all = True  # https://docs.scrapy.org/en/latest/topics/spider-middleware.html?highlight=handle_httpstatus_all#std-reqmeta-handle_httpstatus_all
 
-        def __init__(self, url: str, useragent: str, cookies: Optional[List[Dict[Any, Any]]]=None, referer: str='', proxy: str='', log_level: str='WARNING', *args: Any, **kwargs: Any) -> None:
+        def __init__(self, url: str, useragent: str, cookies: List[Dict[Any, Any]],
+                     referer: str, proxy: str, log_level: str='WARNING',
+                     *args: Any, **kwargs: Any) -> None:
             logger = logging.getLogger('scrapy')
             logger.setLevel(log_level)
             super().__init__(*args, **kwargs)
             self.start_url: str = url
             self.useragent: str = useragent
             self.allowed_domains: List[str] = []
-            if cookies is None:
-                cookies = []
             self.cookies: List[Dict[Any, Any]] = cookies
             self.referer: str = referer
 
@@ -86,7 +86,6 @@ class ScrapySplashWrapperCrawler():
 
                 if any((self.proxy['username'], self.proxy['password'])) and not all((self.proxy['username'], self.proxy['password'])):
                     raise InvalidProxy(proxy, 'If the proxy requires a username, it also requires a password.')
-
 
             hostname = urlparse(self.start_url).hostname
             if hostname:
@@ -119,10 +118,10 @@ class ScrapySplashWrapperCrawler():
                                           })
             yield response.data
 
-    def __init__(self, *, splash_url: str, useragent: str, cookies: Optional[List[Dict[Any, Any]]]=None, referer: str='', proxy: str='', depth: int=1, log_enabled: bool=False, log_level: str='WARNING'):
+    def __init__(self, *, splash_url: str, useragent: str, cookies: List[Dict[Any, Any]],
+                 referer: str, proxy: str, depth: int=1, log_enabled: bool=False,
+                 log_level: str='WARNING'):
         self.useragent = useragent
-        if cookies is None:
-            cookies = []
         self.cookies = cookies
         self.referer = referer
         self.proxy = proxy.strip()
@@ -160,6 +159,8 @@ class ScrapySplashWrapperCrawler():
             crawled_items.append(item)
 
         self.crawler.signals.connect(add_item, signals.item_scraped)
-        self.process.crawl(self.crawler, url=url, useragent=self.useragent, cookies=self.cookies, referer=self.referer, proxy=self.proxy, log_level=self.log_level)
+        self.process.crawl(self.crawler, url=url, useragent=self.useragent,
+                           cookies=self.cookies, referer=self.referer, proxy=self.proxy,
+                           log_level=self.log_level)
         self.process.start()
         return crawled_items
