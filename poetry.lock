@@ -83,7 +83,7 @@ pycparser = "*"
 
 [[package]]
 name = "charset-normalizer"
-version = "2.0.4"
+version = "2.0.5"
 description = "The Real First Universal Charset Detector. Open, modern and actively maintained alternative to Chardet."
 category = "main"
 optional = true
@@ -645,7 +645,7 @@ python-versions = "*"
 
 [[package]]
 name = "sphinx"
-version = "4.1.2"
+version = "4.2.0"
 description = "Python documentation generator"
 category = "main"
 optional = true
@@ -866,7 +866,7 @@ docs = ["Sphinx"]
 [metadata]
 lock-version = "1.1"
 python-versions = "^3.8"
-content-hash = "4b46704d95f59ea3ca0cb7addea233e65c9a383cdb5669a68d9fa8d8a57bebd5"
+content-hash = "88e695cb14fcd972447f707a92cfe5b44da687307ab5063119efef78bd80e395"
 
 [metadata.files]
 alabaster = [
@@ -940,8 +940,8 @@ cffi = [
     {file = "cffi-1.14.6.tar.gz", hash = "sha256:c9a875ce9d7fe32887784274dd533c57909b7b1dcadcc128a2ac21331a9765dd"},
 ]
 charset-normalizer = [
-    {file = "charset-normalizer-2.0.4.tar.gz", hash = "sha256:f23667ebe1084be45f6ae0538e4a5a865206544097e4e8bbcacf42cd02a348f3"},
-    {file = "charset_normalizer-2.0.4-py3-none-any.whl", hash = "sha256:0c8911edd15d19223366a194a513099a302055a962bca2cec0f54b8b63175d8b"},
+    {file = "charset-normalizer-2.0.5.tar.gz", hash = "sha256:7098e7e862f6370a2a8d1a6398cd359815c45d12626267652c3f13dec58e2367"},
+    {file = "charset_normalizer-2.0.5-py3-none-any.whl", hash = "sha256:fa471a601dfea0f492e4f4fca035cd82155e65dc45c9b83bf4322dfab63755dd"},
 ]
 colorama = [
     {file = "colorama-0.4.4-py2.py3-none-any.whl", hash = "sha256:9f47eda37229f68eee03b24b9748937c7dc3868f906e8ba69fbcbdd3bc5dc3e2"},
@@ -1258,8 +1258,8 @@ snowballstemmer = [
     {file = "snowballstemmer-2.1.0.tar.gz", hash = "sha256:e997baa4f2e9139951b6f4c631bad912dfd3c792467e2f03d7239464af90e914"},
 ]
 sphinx = [
-    {file = "Sphinx-4.1.2-py3-none-any.whl", hash = "sha256:46d52c6cee13fec44744b8c01ed692c18a640f6910a725cbb938bc36e8d64544"},
-    {file = "Sphinx-4.1.2.tar.gz", hash = "sha256:3092d929cd807926d846018f2ace47ba2f3b671b309c7a89cd3306e80c826b13"},
+    {file = "Sphinx-4.2.0-py3-none-any.whl", hash = "sha256:98a535c62a4fcfcc362528592f69b26f7caec587d32cd55688db580be0287ae0"},
+    {file = "Sphinx-4.2.0.tar.gz", hash = "sha256:94078db9184491e15bce0a56d9186e0aec95f16ac20b12d00e06d4e36f1058a6"},
 ]
 sphinxcontrib-applehelp = [
     {file = "sphinxcontrib-applehelp-1.0.2.tar.gz", hash = "sha256:a072735ec80e7675e3f432fcae8610ecf509c5f1869d17e2eecff44389cdbc58"},
