@@ -25,8 +25,8 @@ scraper = "scrapysplashwrapper:main"
 
 [tool.poetry.dependencies]
 python = "^3.8"
-scrapy-splash = "^0.7.2"
-Scrapy = "^2.5.0"
+scrapy-splash = "^0.8.0"
+Scrapy = "^2.5.1"
 Sphinx = { version = "^4.2.0", optional = true }
 
 [tool.poetry.dev-dependencies]
