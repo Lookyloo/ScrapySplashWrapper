@@ -25,7 +25,7 @@ function main(splash, args)
     splash:init_cookies(args.cookies)
 
     -- Set a reasonable viewport
-    splash:set_viewport_size(1280, 800)
+    splash:set_viewport_size(1920, 1080)
 
     -- Set proxy
     if next(args.myproxy) then
@@ -73,7 +73,7 @@ function main(splash, args)
     return {
         har = splash:har(),
         html = splash:html(),
-        png = splash:png{render_all=true},
+        png = splash:png(),
         cookies = splash:get_cookies(),
 		last_redirected_url = splash:url(),
         error = err
