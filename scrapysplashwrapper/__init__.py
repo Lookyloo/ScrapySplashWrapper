@@ -18,7 +18,7 @@ logging.getLogger(__name__).addHandler(logging.NullHandler())
 
 
 def crawl(splash_url: str, url: str, *, cookies: Optional[List[Dict[Any, Any]]]=None,
-          referer: Optional[str]=None, proxy: Optional[str]=None, depth: int=1,
+          referer: Optional[str]=None, headers: Optional[Dict[str, str]]=None, proxy: Optional[str]=None, depth: int=1,
           user_agent: str='Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/63.0.3239.132 Safari/537.36',
           log_enabled: bool=False, log_level: str='WARNING') -> List[Dict[Any, Any]]:
     '''Send the URL to crawl to splash, returns a list of responses from splash. Each entry from the list corresponds to a single URL loaded by Splash.'''
@@ -27,10 +27,11 @@ def crawl(splash_url: str, url: str, *, cookies: Optional[List[Dict[Any, Any]]]=
     logger.setLevel(log_level)
 
     def _crawl(queue: 'Queue[Any]', splash_url: str, ua: str, url: str,
-               cookies: List[Dict[Any, Any]], referer: str, proxy: str,
+               cookies: List[Dict[Any, Any]], referer: str, headers: Dict[str, str], proxy: str,
                depth: int, log_enabled: bool, log_level: str) -> None:
         crawler = ScrapySplashWrapperCrawler(splash_url=splash_url, useragent=ua, cookies=cookies,
-                                             referer=referer, proxy=proxy, depth=depth, log_enabled=log_enabled, log_level=log_level)
+                                             referer=referer, headers=headers, proxy=proxy, depth=depth,
+                                             log_enabled=log_enabled, log_level=log_level)
         res = crawler.crawl(url)
         queue.put(res)
 
@@ -39,6 +40,7 @@ def crawl(splash_url: str, url: str, *, cookies: Optional[List[Dict[Any, Any]]]=
     p = Process(target=_crawl, args=(q, splash_url, user_agent, url,
                                      cookies if cookies else [],
                                      referer if referer else '',
+                                     headers if headers else {},
                                      proxy if proxy else '',
                                      depth, log_enabled, log_level))
     p.start()

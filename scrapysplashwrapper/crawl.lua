@@ -39,14 +39,19 @@ function main(splash, args)
             end)
     end
 
+    local headers = {}
     -- Run
     if args.referer then
-      ok, reason = splash:go{args.url, headers={
-        ['Referer'] = args.referer,
-      }}
-    else
-      ok, reason = splash:go{args.url}
+      headers['Referer'] = args.referer
     end
+
+    if args.headers then
+      for name, value in pairs(args.headers) do
+        headers[name] = value
+      end
+    end
+
+    ok, reason = splash:go{args.url, headers=headers}
 
     -- The error options are listed here: https://splash.readthedocs.io/en/stable/scripting-ref.html#splash-go
     -- If not OK, but HTTP error, we want to wait. Otherwise, we still want to return whatever we can, but no need to wait.

@@ -61,7 +61,7 @@ class ScrapySplashWrapperCrawler():
         handle_httpstatus_all = True  # https://docs.scrapy.org/en/latest/topics/spider-middleware.html?highlight=handle_httpstatus_all#std-reqmeta-handle_httpstatus_all
 
         def __init__(self, url: str, useragent: str, cookies: List[Dict[Any, Any]],
-                     referer: str, proxy: str, log_level: str='WARNING',
+                     referer: str, headers: Dict[str, str], proxy: str, log_level: str='WARNING',
                      *args: Any, **kwargs: Any) -> None:
             logger = logging.getLogger('scrapy')
             logger.setLevel(log_level)
@@ -71,6 +71,7 @@ class ScrapySplashWrapperCrawler():
             self.allowed_domains: List[str] = []
             self.cookies: List[Dict[Any, Any]] = cookies
             self.referer: str = referer
+            self.headers: Dict[str, str] = headers
 
             self.proxy: Dict[str, str] = {}
             if proxy:
@@ -100,6 +101,7 @@ class ScrapySplashWrapperCrawler():
                                       'timeout': 90,
                                       'useragent': self.useragent,
                                       'referer': self.referer,
+                                      'headers': self.headers,
                                       'cookies': [{k: v for k, v in cookie.items() if v is not None} for cookie in self.cookies],
                                       'myproxy': self.proxy,
                                       'lua_source': self.script
@@ -112,6 +114,7 @@ class ScrapySplashWrapperCrawler():
                                     args={'wait': 10, 'resource_timeout': 20,
                                           'useragent': self.useragent,
                                           'referer': response.data['last_redirected_url'],
+                                          'headers': self.headers,
                                           'cookies': response.data['cookies'],
                                           'myproxy': self.proxy,
                                           'lua_source': self.script
@@ -119,11 +122,12 @@ class ScrapySplashWrapperCrawler():
             yield response.data
 
     def __init__(self, *, splash_url: str, useragent: str, cookies: List[Dict[Any, Any]],
-                 referer: str, proxy: str, depth: int=1, log_enabled: bool=False,
-                 log_level: str='WARNING'):
+                 referer: str, headers: Dict[str, str], proxy: str, depth: int=1,
+                 log_enabled: bool=False, log_level: str='WARNING'):
         self.useragent = useragent
         self.cookies = cookies
         self.referer = referer
+        self.headers = headers
         self.proxy = proxy.strip()
         self.log_level = log_level
         self.process = CrawlerProcess({'LOG_ENABLED': log_enabled})
@@ -161,7 +165,7 @@ class ScrapySplashWrapperCrawler():
 
         self.crawler.signals.connect(add_item, signals.item_scraped)
         self.process.crawl(self.crawler, url=url, useragent=self.useragent,
-                           cookies=self.cookies, referer=self.referer, proxy=self.proxy,
-                           log_level=self.log_level)
+                           cookies=self.cookies, referer=self.referer, headers=self.headers,
+                           proxy=self.proxy, log_level=self.log_level)
         self.process.start()
         return crawled_items
