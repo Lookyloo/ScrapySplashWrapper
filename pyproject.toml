@@ -31,7 +31,7 @@ lxml = "^4.6.5,!=4.7.0"
 Sphinx = { version = "^4.3.2", optional = true }
 
 [tool.poetry.dev-dependencies]
-mypy = "^0.920"
+mypy = "^0.921"
 ipython = "^7.30.1"
 
 [tool.poetry.extras]
