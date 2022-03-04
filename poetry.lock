@@ -257,7 +257,7 @@ scripts = ["click (>=6.0)", "twisted (>=16.4.0)"]
 
 [[package]]
 name = "ipython"
-version = "8.1.0"
+version = "8.1.1"
 description = "IPython: Productive Interactive Computing"
 category = "dev"
 optional = false
@@ -837,7 +837,7 @@ test = ["pytest"]
 
 [[package]]
 name = "twisted"
-version = "22.1.0"
+version = "22.2.0"
 description = "An asynchronous networking framework written in Python"
 category = "main"
 optional = false
@@ -949,7 +949,7 @@ docs = ["Sphinx"]
 [metadata]
 lock-version = "1.1"
 python-versions = "^3.8"
-content-hash = "ef61cb098bf3aba8d80964abad6e605674cc005d92dddf75852bcfffbd85b99e"
+content-hash = "d5b71d55b2c2b60146cf4dbe6b4c04a3354e1f45ed7c59216e345a5dd4faf82d"
 
 [metadata.files]
 alabaster = [
@@ -1042,6 +1042,7 @@ charset-normalizer = [
 ]
 colorama = [
     {file = "colorama-0.4.4-py2.py3-none-any.whl", hash = "sha256:9f47eda37229f68eee03b24b9748937c7dc3868f906e8ba69fbcbdd3bc5dc3e2"},
+    {file = "colorama-0.4.4.tar.gz", hash = "sha256:5941b2b48a20143d2267e95b1c2a7603ce057ee39fd88e7329b0c292aa16869b"},
 ]
 constantly = [
     {file = "constantly-15.1.0-py2.py3-none-any.whl", hash = "sha256:dd2fa9d6b1a51a83f0d7dd76293d734046aa176e384bf6e33b7e44880eb37c5d"},
@@ -1118,8 +1119,8 @@ incremental = [
     {file = "incremental-21.3.0.tar.gz", hash = "sha256:02f5de5aff48f6b9f665d99d48bfc7ec03b6e3943210de7cfc88856d755d6f57"},
 ]
 ipython = [
-    {file = "ipython-8.1.0-py3-none-any.whl", hash = "sha256:7bfeb6f298b2d7f3859c4f3e134082015cf34de90f89f5020e107a5a762ef6db"},
-    {file = "ipython-8.1.0.tar.gz", hash = "sha256:42c23e90b2deaae631266885de1656a517a1673d7e1db57e8eb3a4bb6cd5ce1b"},
+    {file = "ipython-8.1.1-py3-none-any.whl", hash = "sha256:6f56bfaeaa3247aa3b9cd3b8cbab3a9c0abf7428392f97b21902d12b2f42a381"},
+    {file = "ipython-8.1.1.tar.gz", hash = "sha256:8138762243c9b3a3ffcf70b37151a2a35c23d3a29f9743878c33624f4207be3d"},
 ]
 itemadapter = [
     {file = "itemadapter-0.4.0-py3-none-any.whl", hash = "sha256:695809a4e2f42174f0392dd66c2ceb2b2454d3ebbf65a930e5c85910d8d88d8f"},
@@ -1442,8 +1443,8 @@ traitlets = [
     {file = "traitlets-5.1.1.tar.gz", hash = "sha256:059f456c5a7c1c82b98c2e8c799f39c9b8128f6d0d46941ee118daace9eb70c7"},
 ]
 twisted = [
-    {file = "Twisted-22.1.0-py3-none-any.whl", hash = "sha256:ccd638110d9ccfdc003042aa3e1b6d6af272eaca45d36e083359560549e3e848"},
-    {file = "Twisted-22.1.0.tar.gz", hash = "sha256:b7971ec9805b0f80e1dcb1a3721d7bfad636d5f909de687430ce373979d67b61"},
+    {file = "Twisted-22.2.0-py3-none-any.whl", hash = "sha256:5c63c149eb6b8fe1e32a0215b1cef96fabdba04f705d8efb9174b1ccf5b49d49"},
+    {file = "Twisted-22.2.0.tar.gz", hash = "sha256:57f32b1f6838facb8c004c89467840367ad38e9e535f8252091345dba500b4f2"},
 ]
 twisted-iocpsupport = [
     {file = "twisted-iocpsupport-1.0.2.tar.gz", hash = "sha256:72068b206ee809c9c596b57b5287259ea41ddb4774d86725b19f35bf56aa32a9"},
