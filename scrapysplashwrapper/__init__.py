@@ -1,5 +1,4 @@
 #!/usr/bin/env python3
-# -*- coding: utf-8 -*-
 
 import argparse
 import base64
@@ -72,7 +71,7 @@ def main() -> None:
         dirpath = os.path.join('./', datetime.now().isoformat())
 
     if os.path.exists(dirpath):
-        sys.exit('{} already exists.'.format(dirpath))
+        sys.exit(f'{dirpath} already exists.')
 
     os.makedirs(dirpath)
 
