@@ -27,4 +27,3 @@ optional arguments:
   --debug               Enable debug mode on scrapy/splash
 
 ```
-
